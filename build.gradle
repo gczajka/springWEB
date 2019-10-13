@@ -23,8 +23,8 @@ dependencies {
 	compile ('io.springfox:springfox-swagger2:2.9.2')
 	compile('io.springfox:springfox-swagger-ui:2.9.2')
 	annotationProcessor 'org.projectlombok:lombok'
-	
-	
+	compile 'org.springframework.boot:spring-boot-starter-mail:2.1.9.RELEASE'
+
 	testCompile ('org.springframework.boot:spring-boot-starter-test')
 
 	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
