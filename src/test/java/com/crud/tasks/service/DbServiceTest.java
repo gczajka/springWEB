@@ -22,15 +22,16 @@ public class DbServiceTest {
     public void saveTask() {
         //Given
         Task task = new Task(null, "name", "description");
-
-        //When
-        Task savedTask = dbService.saveTask(task);
-
-        //Then
-        Assert.assertEquals("name",savedTask.getTitle());
-
-        //CleanUp
-        dbService.deleteTask(savedTask.getId());
+        Task savedTask = null;
+        try {
+            //When
+            savedTask = dbService.saveTask(task);
+            //Then
+            Assert.assertEquals("name", savedTask.getTitle());
+        } finally {
+            //CleanUp
+            dbService.deleteTask(savedTask.getId());
+        }
     }
 
     @Test
