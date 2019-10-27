@@ -16,6 +16,8 @@ import java.util.List;
 public class MapperTestSuite {
     @Autowired
     private TrelloMapper trelloMapper;
+    @Autowired
+    private TaskMapper taskMapper;
 
     @Test
     public void testMapToBoards() {
@@ -100,4 +102,43 @@ public class MapperTestSuite {
         Assert.assertEquals("name1", trelloCardDto.getName());
         Assert.assertEquals("description1", trelloCardDto.getDescription());
     }
+
+    @Test
+    public void testMapToTask() {
+        //Given
+        TaskDto taskDto = new TaskDto(1L, "name1", "description1");
+        //When
+        Task task = taskMapper.mapToTask(taskDto);
+        //Then
+        Assert.assertEquals(1L, (long)task.getId());
+        Assert.assertEquals("name1", task.getTitle());
+        Assert.assertEquals("description1", task.getContent());
+    }
+
+    @Test
+    public void testMapToTaskDto() {
+        //Given
+        Task task = new Task(1L, "name1", "description1");
+        //When
+        TaskDto taskDto = taskMapper.mapToTaskDto(task);
+        //Then
+        Assert.assertEquals(1L, (long)task.getId());
+        Assert.assertEquals("name1", task.getTitle());
+        Assert.assertEquals("description1", task.getContent());
+    }
+
+    @Test
+    public void testMapToTaskDtoList() {
+        //Given
+        Task task1 = new Task(1L, "name1", "description1");
+        List<Task> listOfTask = new ArrayList<>();
+        listOfTask.add(task1);
+
+        //When
+        List<TaskDto> listOfTaskDto = taskMapper.mapToTaskDtoList(listOfTask);
+        //Then
+        Assert.assertEquals(1, listOfTaskDto.size());
+        Assert.assertEquals("name1", listOfTaskDto.get(0).getTitle());
+    }
+
 }
