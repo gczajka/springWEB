@@ -27,7 +27,7 @@ dependencies {
 	compile('com.google.code.gson:gson:2.8.2')
 
 	compile ('org.springframework.boot:spring-boot-starter-actuator')
-
+	compile (group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.1.RELEASE')
 	testCompile ('org.springframework.boot:spring-boot-starter-test')
 	//testImplementation('com.h2database:h2')
 	//testImplementation('org.hamcrest:java-hamcrest:2.0.0.0')
