@@ -39,15 +39,15 @@ public class DbServiceTest {
         //Given
         Task task = new Task(null, "name", "description");
         Task savedTask = dbService.saveTask(task);
-
-        //When
-        List<Task> listOfTasks = dbService.getAllTasks();
-
-        //Then
-        Assert.assertEquals(1, listOfTasks.size());
-
-        //CleanUp
-        dbService.deleteTask(savedTask.getId());
+        try {
+            //When
+            List<Task> listOfTasks = dbService.getAllTasks();
+            //Then
+            Assert.assertEquals(1, listOfTasks.size());
+        } finally {
+            //CleanUp
+            dbService.deleteTask(savedTask.getId());
+        }
     }
 
     @Test
@@ -55,15 +55,15 @@ public class DbServiceTest {
         //Given
         Task task = new Task(null, "name2", "description2");
         Task savedTask = dbService.saveTask(task);
-
-        //When
-        Optional<Task> gotTask = dbService.getTask(savedTask.getId());
-
-        //Then
-        Assert.assertEquals("name2", gotTask.orElse(null).getTitle());
-
-        //CleanUp
-        dbService.deleteTask(savedTask.getId());
+        try {
+            //When
+            Optional<Task> gotTask = dbService.getTask(savedTask.getId());
+            //Then
+            Assert.assertEquals("name2", gotTask.orElse(null).getTitle());
+        } finally {
+            //CleanUp
+            dbService.deleteTask(savedTask.getId());
+        }
     }
 
     @Test
@@ -71,11 +71,9 @@ public class DbServiceTest {
         //Given
         Task task = new Task(null, "name3", "description3");
         Task savedTask = dbService.saveTask(task);
-
         //When
         dbService.deleteTask(savedTask.getId());
         int size = dbService.getAllTasks().size();
-
         //Then
         Assert.assertEquals(0, size);
     }
