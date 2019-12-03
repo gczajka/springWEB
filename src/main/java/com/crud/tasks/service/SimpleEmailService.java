@@ -31,12 +31,31 @@ public class SimpleEmailService {
         }
     }
 
+    public void sendFormattedUsingScheduler(final Mail mail) {
+        LOGGER.info("Starting formatted scheduled email preparation...");
+        try {
+            javaMailSender.send(createMimeMessageForScheduler(mail));
+            LOGGER.info("Formatted scheduled email has been sent.");
+        } catch (MailException e) {
+            LOGGER.error("Failed to process formatted scheduled email sending: ", e.getMessage(), e);
+        }
+    }
+
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
         messageHelper.setTo(mail.getMailTo());
         messageHelper.setSubject(mail.getSubject());
         messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+        };
+    }
+
+    private MimeMessagePreparator createMimeMessageForScheduler(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildFormattedScheduledEmail(mail.getMessage()), true);
         };
     }
 
