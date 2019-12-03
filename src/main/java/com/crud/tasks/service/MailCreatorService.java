@@ -37,7 +37,7 @@ public class MailCreatorService {
         context.setVariable("show_button", false);
         context.setVariable("admin_name", adminConfig.getAdminName());
         context.setVariable("admin_company", adminConfig.getAdminCompany());
-        context.setVariable("goodbye", "Thank you for using our services!");
-        return templateEngine.process("mail/created-trello-card-mail", context);
+        context.setVariable("goodbye", "Next mail will be sent in 24 hours");
+        return templateEngine.process("mail/formatted-scheduled-mail", context);
     }
 }
